@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTcpSocket>
+#include "ChatClient.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,5 +24,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QTcpSocket *socket;
+    ChatClient *client;
+    void appendLine(const QString &line, bool isSelf = false);
 };
 #endif // MAINWINDOW_H

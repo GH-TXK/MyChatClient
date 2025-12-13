@@ -7,7 +7,23 @@
 ChatClient::ChatClient(QObject *parent)
     : QObject(parent)
 {
-
+    connect(&socket, &QTcpSocket::connected, this, &ChatClient::connected);
+    connect(&socket, &QTcpSocket::readyRead, this, [this] {
+        buffer += socket.readAll();
+        while (buffer.size() >= 4) {
+            quint32 len = qFromBigEndian<quint32>(
+                reinterpret_cast<const uchar *>(buffer.constData()));
+            if (buffer.size() - 4 < static_cast<int>(len))
+                break;
+            QByteArray payload = buffer.mid(4, len);
+            buffer.remove(0, 4 + len);
+            emit messageReceived(QString::fromUtf8(payload));
+        }
+    });
+    connect(&socket,
+            QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::errorOccurred),
+            this,
+            [this](auto) { emit errorText(socket.errorString()); });
 }
 
 

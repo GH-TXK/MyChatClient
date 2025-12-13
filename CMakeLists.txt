@@ -13,6 +13,7 @@ qt_add_executable(MyChatClient
     mainwindow.ui
     ChatClient.h
     ChatClient.cpp
+    login.ui
 )
 
 target_link_libraries(MyChatClient

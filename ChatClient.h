@@ -2,7 +2,7 @@
 // #define CHATCLIENT_H
 
 // #endif // CHATCLIENT_H
-#pragma
+#pragma once
 #include <QObject>
 #include <QTcpSocket>
 #include <QtEndian>
