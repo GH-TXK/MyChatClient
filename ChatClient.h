@@ -44,6 +44,7 @@ private:
     qint64 receivedBytes = 0;
     QFile outFile;
     bool receivingFile = false;
-
+    QString pendingFilePath;   // 待发送文件路径（发送端）
+    bool pendingSendActive = false;
 
 };
